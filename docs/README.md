@@ -74,7 +74,7 @@ fahim-portfolio-nextjs/
 ## 💡 Need Help?
 
 - Check the [Troubleshooting](./DEPLOYMENT.md#troubleshooting) section in DEPLOYMENT.md
-- Review the [Important Notes](./ENV_SETUP.md#important-notes) in ENV_SETUP.md
+- Review the [Best Practices](./SITE_CONFIG.md#best-practices) in SITE_CONFIG.md
 - Verify your setup with the [Verification](./SUMMARY.md#-verification-results) checklist
 
 ---

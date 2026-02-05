@@ -62,17 +62,20 @@ fahim-portfolio-nextjs/
 - 🌐 Custom domain support
 - 🔄 Automatic deployment via GitHub Actions
 
-## 🔧 Environment Variables
+## 🔧 Configuration
 
-Create a `.env` file based on `.env.example`:
+Site metadata is managed in `src/config/site.ts`:
 
-```env
-VITE_SITE_URL=https://fahimkamal.dev
-VITE_SITE_TITLE=Fahim Kamal Ahmed | Game Developer & Level Designer
-VITE_SITE_DESCRIPTION=Game Developer with 3+ years of experience...
+```typescript
+export const siteConfig = {
+  url: 'https://fahimkamal.dev',
+  title: 'Fahim Kamal Ahmed | Game Developer & Level Designer',
+  description: 'Game Developer with 3+ years of experience...',
+  // ... more settings
+}
 ```
 
-See [ENV_SETUP.md](./docs/ENV_SETUP.md) for detailed configuration.
+See [SITE_CONFIG.md](./docs/SITE_CONFIG.md) for detailed configuration guide.
 
 ## 📦 Deployment
 
