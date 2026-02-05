@@ -1,31 +1,76 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Github, ChevronRight } from 'lucide-react';
 import { getProjectById, type ProjectData } from '../data/projects';
 import { Navbar } from '../components/Navbar';
 
 function QuickNav({ sections }: { sections: ProjectData['sections'] }) {
+  const [activeSection, setActiveSection] = useState('overview');
+
+  const navItems = [
+    { id: 'overview', title: 'Overview' },
+    { id: 'screenshots', title: 'Screenshots' },
+    ...sections,
+    { id: 'reflection', title: 'Reflection' },
+  ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the section that is intersecting most prominently
+        const visibleSections = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleSections.length > 0) {
+          setActiveSection(visibleSections[0].target.id);
+        }
+      },
+      { 
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        rootMargin: '-20% 0px -70% 0px' 
+      }
+    );
+
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [navItems]);
+
   return (
-    <aside className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2">
-      <p className="text-text-muted text-xs uppercase tracking-wider mb-3">Navigate</p>
-      <nav className="space-y-2">
-        <a href="#overview" className="block text-text-secondary text-sm hover:text-accent transition-colors">
-          Project Overview
-        </a>
-        <a href="#screenshots" className="block text-text-secondary text-sm hover:text-accent transition-colors">
-          Screenshots
-        </a>
-        {sections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="block text-text-secondary text-sm hover:text-accent transition-colors"
-          >
-            {section.title}
-          </a>
-        ))}
-        <a href="#reflection" className="block text-text-secondary text-sm hover:text-accent transition-colors">
-          Reflection
-        </a>
+    <aside className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50">
+      <nav className="flex flex-col gap-6">
+        {navItems.map((item) => {
+          const isActive = activeSection === item.id;
+          return (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={() => {
+                // Smooth scroll handled by CSS, but we can set active section immediately
+                setActiveSection(item.id);
+              }}
+              className="group flex items-center gap-3 transition-all duration-300"
+              title={item.title}
+            >
+              <div className={`w-2 h-2 rounded-full border-2 transition-all duration-300 ${
+                isActive 
+                  ? 'bg-accent border-accent scale-125' 
+                  : 'bg-transparent border-accent/40 group-hover:border-accent group-hover:scale-110'
+              }`} />
+              <span className={`hidden lg:block text-[10px] tracking-[0.2em] uppercase transition-all duration-300 ${
+                isActive 
+                  ? 'text-accent font-bold opacity-100' 
+                  : 'text-text-secondary font-medium opacity-40 group-hover:opacity-100'
+              }`}>
+                {item.title}
+              </span>
+            </a>
+          );
+        })}
       </nav>
     </aside>
   );
@@ -48,11 +93,13 @@ function SectionDivider({ title, id }: { title: string; id: string }) {
 function SectionWrapper({ 
   children, 
   variant = 'default',
-  className = '' 
+  className = '',
+  id
 }: { 
   children: React.ReactNode; 
   variant?: 'default' | 'alt' | 'dark';
   className?: string;
+  id?: string;
 }) {
   const bgClass = {
     default: 'bg-background',
@@ -61,7 +108,7 @@ function SectionWrapper({
   }[variant];
 
   return (
-    <div className={`${bgClass} ${className}`}>
+    <div id={id} className={`${bgClass} ${className}`}>
       <div className="max-w-5xl mx-auto px-6 py-10">
         {children}
       </div>
@@ -107,39 +154,43 @@ export function ProjectDetail() {
       {/* Navbar */}
       <Navbar />
 
+      {/* Quick Nav */}
+      <QuickNav sections={project.sections} />
+
       {/* Hero Section */}
-      <section className="relative pt-20">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <img
             src={project.image}
             alt=""
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/90 to-background" />
+          {/* Procedural Pattern Overlays */}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-background/10 backdrop-blur-[1px]" />
+          
+          {/* Subtle Grid Generator Effect */}
+          <div 
+            className="absolute inset-0 opacity-[0.15]" 
+            style={{
+              backgroundImage: `linear-gradient(var(--color-accent) 1px, transparent 1px), linear-gradient(90deg, var(--color-accent) 1px, transparent 1px)`,
+              backgroundSize: '40px 40px'
+            }}
+          />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-24">
-          {/* Back button beside genre */}
-          <div className="flex items-center gap-4 mb-3">
-            <Link
-              to="/"
-              className="flex items-center gap-1.5 text-accent text-sm hover:text-accent-light transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back</span>
-            </Link>
-            <span className="text-text-muted">|</span>
-            <p className="text-text-muted text-sm tracking-wider uppercase">
-              {project.genre}
-            </p>
-          </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-text-primary mb-4">
+        <div className="relative max-w-6xl mx-auto px-6 py-20 flex flex-col items-center text-center">
+          <p className="text-accent text-xs md:text-sm tracking-[0.4em] uppercase mb-6 font-semibold opacity-80">
+            {project.genre}
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-text-primary mb-8 tracking-tight leading-tight">
             {project.title}
           </h1>
-          <p className="text-accent text-lg">{project.role}</p>
-
-          {/* Quick Nav - Desktop */}
-          <QuickNav sections={project.sections} />
+          <div className="h-px w-24 bg-accent/50 mb-8" />
+          <p className="text-text-secondary text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+            {project.role}
+          </p>
         </div>
       </section>
 
