@@ -166,7 +166,10 @@ export function ProjectDetail() {
             className="w-full h-full object-cover"
           />
           {/* Procedural Pattern Overlays */}
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay" />
+          <div 
+            className="absolute inset-0 opacity-20 mix-blend-overlay bg-center" 
+            style={{ backgroundImage: `url(${project.image})`, backgroundSize: '300px' }}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background" />
           <div className="absolute inset-0 bg-background/10 backdrop-blur-[1px]" />
           

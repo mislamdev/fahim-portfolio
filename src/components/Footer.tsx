@@ -1,4 +1,4 @@
-import { FileText, Mail, Linkedin } from 'lucide-react';
+import { FileText, Mail, Linkedin, Github } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -48,6 +48,15 @@ export function Footer() {
               >
                 <Linkedin className="w-5 h-5 text-accent" />
                 <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://github.com/Fahim-Ahmad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-text-primary hover:text-accent transition-colors"
+              >
+                <Github className="w-5 h-5 text-accent" />
+                <span>GitHub</span>
               </a>
             </div>
           </div>
