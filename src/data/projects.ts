@@ -130,6 +130,77 @@ export const projects: ProjectData[] = [
     pdf: '/projects/blackout-facility/GDD - Blackout Facility.pdf',
   },
   {
+    id: 'unreal-paradise',
+    title: 'Unreal Paradise',
+    genre: 'Environment Art - Stylized Fantasy',
+    role: 'Environment Artist',
+    type: 'personal',
+    image: '/projects/unreal-paradise/Unreal Paradise-cover.png',
+    overview: {
+      description: [
+        'An immersive, stylized fantasy jungle village created in Unreal Engine 5.5, showcasing environment art and cinematic storytelling.',
+        'Developed as a final assignment for the "Unreal Engine Fundamentals" course, focusing on landscape sculpting, foliage placement, and lighting.',
+      ],
+      engine: 'Unreal Engine 5.5',
+      timeframe: '2 weeks',
+      team: 'Solo (Course Submission)',
+    },
+    roleSkills: {
+      description: [
+        'Sculpted custom terrain using Landscape Mode and integrated a dynamic river system',
+        'Curated and placed stylized assets to create a cohesive village atmosphere',
+        'Utilized Sequencer and Cine Camera Actors to direct and render a 24-second cinematic',
+        'Implemented post-processing volumes and ambient audio for immersion',
+      ],
+      badges: ['Unreal Engine 5', 'Environment Art', 'Lighting', 'Cinematics'],
+    },
+    screenshots: [
+      '/projects/unreal-paradise/Unreal Paradise-ss-1.png',
+      '/projects/unreal-paradise/Unreal Paradise-ss-2.png',
+      '/projects/unreal-paradise/Unreal Paradise-ss-3.png',
+      '/projects/unreal-paradise/Unreal Paradise-ss-4.png',
+      '/projects/unreal-paradise/Unreal Paradise-ss-5.png',
+      '/projects/unreal-paradise/Unreal Paradise-ss-6.png',
+      '/projects/unreal-paradise/Unreal Paradise-cer.png',
+    ],
+    sections: [
+      {
+        title: 'Artistic Direction',
+        id: 'art-direction',
+        content: [
+          'The project aims for a vibrant, painterly aesthetic inspired by classic RPGs, blending lush jungle foliage with quaint village architecture.',
+        ],
+        subsections: [
+          {
+            title: 'Key Elements',
+            bullets: [
+              'Custom-sculpted landscape with varied elevation',
+              'Dense, hand-painted foliage layers (trees, grass, bushes)',
+              'Atmospheric lighting with dynamic shadows',
+              'Integrated environmental storytelling through prop placement',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Cinematic Production',
+        id: 'cinematic',
+        content: [
+          'A key focus was mastering the Sequencer tool to produce a polished showcase video.',
+        ],
+        bullets: [
+          'Camera composition and movement planning',
+          'Sequencer keyframing and editing',
+          'High-quality rendering pipeline to Blender',
+        ],
+      },
+    ],
+    links: {
+      github: 'https://github.com/FahimKamal/UE5_Stylised_Env',
+    },
+    video: '/projects/unreal-paradise/unreal-paradise.mp4',
+  },
+  {
     id: 'medieval-village',
     title: 'Medieval Village Prototype',
     genre: 'Level Design - Open World Blockout',
