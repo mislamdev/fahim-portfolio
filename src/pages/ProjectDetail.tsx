@@ -10,7 +10,8 @@ import {
   X, 
   ChevronLeft, 
   Maximize2,
-  FileText
+  FileText,
+  ZoomIn
 } from 'lucide-react';
 import { getProjectById, type ProjectData } from '../data/projects';
 import { Navbar } from '../components/Navbar';
@@ -143,6 +144,86 @@ function PanelBar({ title }: { title: string }) {
   );
 }
 
+function FullscreenLightbox({ 
+  images, 
+  selectedIndex, 
+  onClose, 
+  onNext, 
+  onPrev 
+}: { 
+  images: (string | { src: string; caption: string })[], 
+  selectedIndex: number, 
+  onClose: () => void, 
+  onNext: (e?: React.MouseEvent) => void, 
+  onPrev: (e?: React.MouseEvent) => void 
+}) {
+  const currentImage = images[selectedIndex];
+  const src = typeof currentImage === 'string' ? currentImage : currentImage.src;
+  const caption = typeof currentImage === 'string' ? null : currentImage.caption;
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onNext, onPrev, onClose]);
+
+  if (selectedIndex === null || selectedIndex < 0 || selectedIndex >= images.length) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10"
+      onClick={onClose}
+    >
+      <button 
+        className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-full z-[110]"
+        onClick={onClose}
+      >
+        <X className="w-8 h-8" />
+      </button>
+
+      {images.length > 1 && (
+        <>
+          <button 
+            className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
+            onClick={onPrev}
+          >
+            <ChevronLeft className="w-12 h-12" />
+          </button>
+          <button 
+            className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
+            onClick={onNext}
+          >
+            <ChevronRight className="w-12 h-12" />
+          </button>
+        </>
+      )}
+
+      <div className="relative max-w-7xl max-h-full flex flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
+        <img 
+          src={src} 
+          alt="Full view" 
+          className="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-lg animate-in zoom-in-95 duration-300"
+        />
+        
+        <div className="flex flex-col items-center gap-4">
+          <div className="text-white/60 text-sm font-medium tracking-[0.3em] uppercase">
+            {selectedIndex + 1} / {images.length}
+          </div>
+          {caption && (
+            <p className="text-white/80 text-sm md:text-base font-medium max-w-2xl text-center bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
+              {caption}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ImageGallery({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -180,21 +261,6 @@ function ImageGallery({ images }: { images: string[] }) {
       setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
     }
   }, [selectedIndex, images.length]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedIndex !== null) {
-        if (e.key === 'ArrowRight') nextLightboxImage();
-        if (e.key === 'ArrowLeft') prevLightboxImage();
-        if (e.key === 'Escape') setSelectedIndex(null);
-      } else {
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, nextLightboxImage, prevLightboxImage, nextImage, prevImage]);
 
   return (
     <Panel>
@@ -262,66 +328,14 @@ function ImageGallery({ images }: { images: string[] }) {
         </div>
       </div>
 
-      {/* Fullscreen Lightbox */}
       {selectedIndex !== null && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10"
-          onClick={() => setSelectedIndex(null)}
-        >
-          <button 
-            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-full z-[110]"
-            onClick={() => setSelectedIndex(null)}
-          >
-            <X className="w-8 h-8" />
-          </button>
-
-          {images.length > 1 && (
-            <>
-              <button 
-                className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
-                onClick={prevLightboxImage}
-              >
-                <ChevronLeft className="w-12 h-12" />
-              </button>
-              <button 
-                className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
-                onClick={nextLightboxImage}
-              >
-                <ChevronRight className="w-12 h-12" />
-              </button>
-            </>
-          )}
-
-          <div className="relative max-w-7xl max-h-full flex flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={images[selectedIndex]} 
-              alt="Project screenshot full view" 
-              className="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-lg animate-in zoom-in-95 duration-300"
-            />
-            
-            <div className="flex flex-col items-center gap-4">
-              <div className="text-white/60 text-sm font-medium tracking-[0.3em] uppercase">
-                {selectedIndex + 1} / {images.length}
-              </div>
-
-              {images.length > 1 && (
-                <div className="hidden md:flex gap-3 px-4 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
-                  {images.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedIndex(idx)}
-                      className={`w-16 h-10 rounded-md border-2 transition-all overflow-hidden ${
-                        selectedIndex === idx ? 'border-accent scale-110 shadow-lg' : 'border-transparent opacity-30 hover:opacity-100'
-                      }`}
-                    >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <FullscreenLightbox
+          images={images}
+          selectedIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+          onNext={nextLightboxImage}
+          onPrev={prevLightboxImage}
+        />
       )}
     </Panel>
   );
@@ -400,6 +414,7 @@ function ProjectMedia({ project }: { project: ProjectData }) {
 export function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const project = getProjectById(projectId || '');
+  const [activeSectionImages, setActiveSectionImages] = useState<{ images: (string | { src: string; caption: string })[], index: number } | null>(null);
 
   if (!project) {
     return (
@@ -413,6 +428,34 @@ export function ProjectDetail() {
       </div>
     );
   }
+
+  const openSectionLightbox = (images: (string | { src: string; caption: string })[], index: number) => {
+    setActiveSectionImages({ images, index });
+  };
+
+  const closeSectionLightbox = () => {
+    setActiveSectionImages(null);
+  };
+
+  const nextSectionImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeSectionImages) {
+      setActiveSectionImages({
+        ...activeSectionImages,
+        index: (activeSectionImages.index + 1) % activeSectionImages.images.length
+      });
+    }
+  };
+
+  const prevSectionImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeSectionImages) {
+      setActiveSectionImages({
+        ...activeSectionImages,
+        index: (activeSectionImages.index - 1 + activeSectionImages.images.length) % activeSectionImages.images.length
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -546,7 +589,9 @@ export function ProjectDetail() {
             )}
 
             {section.subsections && (
-              <div className="grid md:grid-cols-2 gap-6 mt-6">
+              <div className={`grid gap-6 mt-6 ${
+                section.subsections.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'
+              }`}>
                 {section.subsections.map((sub, i) => (
                   <div key={i} className="bg-surface-light/50 rounded-lg p-5 border border-border/50">
                     <h3 className="text-text-primary font-medium mb-4">{sub.title}</h3>
@@ -586,13 +631,34 @@ export function ProjectDetail() {
                   ? 'flex justify-center' 
                   : 'grid grid-cols-2 gap-4'
               }`}>
-                {section.images.map((img, i) => (
-                  <figure key={i} className={`rounded overflow-hidden ${
-                    section.images && section.images.length === 1 ? 'max-w-4xl w-full' : ''
-                  }`}>
-                    <img src={img} alt={`${section.title} image ${i + 1}`} className="w-full h-auto" />
-                  </figure>
-                ))}
+                {section.images.map((imgItem, i) => {
+                  const src = typeof imgItem === 'string' ? imgItem : imgItem.src;
+                  const caption = typeof imgItem === 'string' ? null : imgItem.caption;
+
+                  return (
+                    <figure 
+                      key={i} 
+                      className={`relative rounded overflow-hidden cursor-zoom-in group ${
+                        section.images && section.images.length === 1 ? 'max-w-4xl w-full' : ''
+                      }`}
+                      onClick={() => section.images && openSectionLightbox(section.images, i)}
+                    >
+                      <div className="relative overflow-hidden rounded-lg">
+                        <img src={src} alt={`${section.title} image ${i + 1}`} className="w-full h-auto transition-transform duration-500 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity p-3 bg-black/50 backdrop-blur-sm rounded-full text-white">
+                            <ZoomIn className="w-6 h-6" />
+                          </div>
+                        </div>
+                      </div>
+                      {caption && (
+                        <figcaption className="mt-3 text-center text-sm text-text-secondary font-medium">
+                          {caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  );
+                })}
               </div>
             )}
           </SectionWrapper>
@@ -668,6 +734,16 @@ export function ProjectDetail() {
           </div>
         </div>
       </footer>
+
+      {activeSectionImages && (
+        <FullscreenLightbox
+          images={activeSectionImages.images}
+          selectedIndex={activeSectionImages.index}
+          onClose={closeSectionLightbox}
+          onNext={nextSectionImage}
+          onPrev={prevSectionImage}
+        />
+      )}
     </div>
   );
 }

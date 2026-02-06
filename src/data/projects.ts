@@ -26,7 +26,7 @@ export interface ProjectData {
     id: string;
     content: string[];
     bullets?: string[];
-    images?: string[];
+    images?: (string | { src: string; caption: string })[];
     subsections?: {
       title: string;
       bullets?: string[];
@@ -44,6 +44,91 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   // Personal Projects
+  {
+    id: 'blackout-facility',
+    title: 'Blackout Facility',
+    genre: 'First-Person Puzzle Escape',
+    role: 'Solo Developer',
+    type: 'personal',
+    image: '/projects/blackout-facility/Blackout-Facility-cover.png',
+    overview: {
+      description: [
+        'A first-person puzzle-escape game where players awaken in a dark, abandoned industrial complex with no memory.',
+        'Developed as a capstone project for the Epic Games "Blueprint Scripting" course, focusing on complex interconnected systems and environmental storytelling.',
+      ],
+      engine: 'Unreal Engine 5.5',
+      timeframe: '4 weeks',
+      team: 'Solo (Capstone Project)',
+    },
+    roleSkills: {
+      description: [
+        'Architected object-oriented Blueprint systems with parent classes and interfaces',
+        'Implemented cascading event systems where single actions transform the entire environment',
+        'Designed multi-stage puzzles requiring logical deduction and backtracking',
+        'Created custom models and level layout using in-engine modeling tools',
+      ],
+      badges: ['Unreal Engine 5', 'Blueprints', 'System Design', 'Puzzle Design'],
+    },
+    screenshots: [
+      '/projects/blackout-facility/Blackout-Facility-ss-1.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-2.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-3.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-4.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-5.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-6.png',
+      '/projects/blackout-facility/Blackout-Facility-ss-7.png',
+      '/projects/blackout-facility/Blackout-Facility-cer.png',
+    ],
+    sections: [
+      {
+        title: 'Design Pillars',
+        id: 'pillars',
+        content: [
+          'The game is built on three core design philosophies that guide the player experience.',
+        ],
+        subsections: [
+          {
+            title: 'Core Concepts',
+            pillars: [
+              { icon: '⚙️', title: 'Interconnectivity', subtitle: 'Actions have cascading effects' },
+              { icon: '💡', title: 'Transformation', subtitle: 'Darkness to light progression' },
+              { icon: '🧠', title: 'Deduction', subtitle: 'Logic over reflexes' },
+              { icon: '🔄', title: 'Backtracking', subtitle: 'Revisiting areas with new context' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Technical Architecture',
+        id: 'architecture',
+        content: [
+          'Leverages advanced Blueprint concepts to create a scalable and clean codebase.',
+        ],
+        bullets: [
+          'Universal Interaction System (BPI_Interactable) for decoupled logic',
+          'Parent Classes (BP_Electronics) for shared functionality across props',
+          'Event Dispatchers for communicating state changes (e.g., Power On event)',
+          'Dynamic Material Instances for real-time emissive lighting changes',
+        ],
+      },
+      {
+        title: 'Level Layout',
+        id: 'layout',
+        content: [
+          'The facility is split across two floors, requiring the player to restore power to access the elevator and unlock new areas.',
+        ],
+        images: [
+          { src: '/projects/blackout-facility/Blackout-Facility-floor-1.png', caption: 'Floor 1: The Industrial Zone - Featuring the Central Hub, Server Room, and Storage areas.' },
+          { src: '/projects/blackout-facility/Blackout-Facility-floor-2.png', caption: 'Floor 2: The Corporate Offices - Containing the Executive Hallway, Open Offices, and the Final Meeting Room.' },
+        ],
+      },
+    ],
+    links: {
+      github: 'https://github.com/FahimKamal/UE5_MazeEscape',
+    },
+    video: '/projects/blackout-facility/blackout-facility.mp4',
+    pdf: '/projects/blackout-facility/GDD - Blackout Facility.pdf',
+  },
   {
     id: 'medieval-village',
     title: 'Medieval Village Prototype',
