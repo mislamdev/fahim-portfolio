@@ -23,9 +23,9 @@ export function Hero() {
     <section id="home" className="relative">
       {/* Hero Background */}
       <div className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0">
           <video
-            src="/hero-video.mp4"
+            src="/projects/unreal-paradise/unreal-paradise.mp4"
             autoPlay
             loop
             muted
@@ -33,13 +33,13 @@ export function Hero() {
             className="w-full h-full object-cover"
           />
           {/* Gray Overlay with Opacity */}
-          <div className="absolute inset-0 bg-slate-900/60" />
+          <div className="absolute inset-0 bg-black/20" />
           
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
         </div>
 
         {/* Hero Content */}
-        <div className="text-center px-6 py-20 mt-16">
+        <div className="relative z-10 text-center px-6 py-20 mt-16">
           <h1 className="font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-primary mb-2 tracking-wide">
             Fahim
           </h1>
