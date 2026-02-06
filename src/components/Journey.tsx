@@ -1,14 +1,15 @@
 import { Briefcase, Code, Trophy, Gamepad2, GraduationCap, Award, Github, Wrench } from 'lucide-react';
 
 const achievements = [
-  { icon: Briefcase, bold: 'Game Mechanic Engineer', muted: 'at Nova Labs, overseeing game mechanics implementation and feature development' },
-  { icon: Code, bold: '3+ years professional experience', muted: 'in game development with Unity and Unreal Engine' },
-  { icon: Gamepad2, bold: 'Lead Developer', muted: 'on multiple published mobile games on Google Play Store' },
-  { icon: Trophy, bold: 'Level Designer', muted: 'creating 70+ levels for Temple of Masks puzzle game' },
+  { icon: Code, bold: 'Unreal Engine Specialist', muted: 'with extensive experience in Blueprint & C++' },
+  { icon: Trophy, bold: '3D Level Designer', muted: 'crafting immersive game worlds and environments' },
+  { icon: Briefcase, bold: 'Game Mechanic Engineer', muted: 'at Nova Labs, overseeing game mechanics implementation' },
+  { icon: Gamepad2, bold: 'Lead Developer', muted: 'on multiple published mobile games' },
+  { icon: GraduationCap, bold: 'Masters in Software Engineering', muted: 'currently pursuing at Universiti Teknologi Malaysia (UTM)' },
   { icon: GraduationCap, bold: 'B.Sc. in Computer Science', muted: 'from Pundra University with CGPA 3.67/4.0' },
   { icon: Award, bold: 'ICPC Asia Dhaka Regional', muted: 'participant and NCPC competitor' },
   { icon: Github, bold: 'GitHub Arctic Code Vault Contributor', muted: 'with 171 repositories and 152 stars' },
-  { icon: Wrench, bold: 'Proficient', muted: 'in C++, C#, Blueprint, Blender, and Git/GitHub' },
+  { icon: Wrench, bold: 'Proficient', muted: 'in Unreal Engine 5, C++, Blueprint, Blender, and Git/GitHub' },
 ];
 
 export function Journey() {

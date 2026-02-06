@@ -1,10 +1,10 @@
 import { Mail, Linkedin, Github, Youtube } from 'lucide-react';
 
 const roles = [
+  { title: 'Unreal Engine Specialist', place: 'focusing on advanced game mechanics' },
+  { title: '3D Level Designer', place: 'creating immersive environments' },
   { title: 'Game Mechanic Engineer', place: 'at Nova Labs' },
-  { title: 'Game Engine Engineer', place: 'with 2+ years professional experience' },
   { title: 'Lead Developer', place: 'for published mobile games' },
-  { title: 'Level Designer', place: 'with 70+ levels designed' },
 ];
 
 export function About() {
@@ -17,7 +17,7 @@ export function About() {
             <h2 className="text-text-primary text-2xl tracking-wide">Greetings!</h2>
 
             <p className="text-accent text-lg">
-              My name is Fahim, a passionate Game Developer based in Dhaka, Bangladesh.
+              My name is Fahim, a passionate Unreal Engine Developer & 3D Level Designer based in Kuala Lumpur, Malaysia.
             </p>
 
             <p className="text-text-secondary leading-relaxed">
@@ -89,8 +89,8 @@ export function About() {
                 <div>
                   <div className="text-6xl mb-4">👨‍💻</div>
                   <p className="text-text-primary font-medium">Fahim Kamal Ahmed</p>
-                  <p className="text-text-muted text-sm mt-1">Game Developer</p>
-                  <p className="text-text-muted text-sm">Dhaka, Bangladesh</p>
+                  <p className="text-text-muted text-sm mt-1">Unreal Engine Dev & Level Designer</p>
+                  <p className="text-text-muted text-sm">Kuala Lumpur, Malaysia</p>
                 </div>
               </div>
             </div>
