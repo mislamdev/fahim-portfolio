@@ -84,14 +84,14 @@ export function About() {
 
           {/* Photo - 2 columns */}
           <div className="lg:col-span-2">
-            <div className="aspect-[4/5] bg-surface-light rounded-lg overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center text-center p-8">
-                <div>
-                  <div className="text-6xl mb-4">👨‍💻</div>
-                  <p className="text-text-primary font-medium">Fahim Kamal Ahmed</p>
-                  <p className="text-text-muted text-sm mt-1">Unreal Engine Dev & Level Designer</p>
-                  <p className="text-text-muted text-sm">Kuala Lumpur, Malaysia</p>
-                </div>
+            <div className="bg-surface-light rounded-lg overflow-hidden shadow-lg border border-white/5">
+              <div className="aspect-[4/5] w-full overflow-hidden relative">
+                <img 
+                  src="/profile-photo.jpeg" 
+                  alt="Fahim Kamal Ahmed" 
+                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-light/20 via-transparent to-transparent" />
               </div>
             </div>
           </div>
