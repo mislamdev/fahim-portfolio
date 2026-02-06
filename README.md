@@ -2,7 +2,7 @@
 
 Game Developer portfolio website built with React, TypeScript, and Vite. Featuring project showcases, professional journey, and contact information.
 
-🌐 **Live Site**: [https://fahimkamal.dev](https://fahimkamal.dev)
+🌐 **Live Site**: [https://fahimkamal.miit.uk](https://fahimkamal.miit.uk)
 
 ## 🚀 Quick Start
 
@@ -20,13 +20,33 @@ npm run build
 npm run preview
 ```
 
+## 🔧 Deployment Quick Fix
+
+If you see a blank page after deployment:
+
+```bash
+# Run the verification script
+./check-deployment.sh
+
+# Then commit and push
+git add .
+git commit -m "Deploy with fixed configuration"
+git push
+```
+
+**CRITICAL**: Ensure GitHub Pages settings use **"GitHub Actions"** as the source (NOT "Deploy from a branch")
+
+📖 **Full Fix Guide**: [docs/PERMANENT_FIX.md](./docs/PERMANENT_FIX.md)
+
 ## 📚 Documentation
 
 Comprehensive documentation is available in the [`docs/`](./docs) folder:
 
+- **[Permanent Fix Guide](./docs/PERMANENT_FIX.md)** - Complete solution for blank page issues ⭐
 - **[Setup Summary](./docs/SUMMARY.md)** - Complete configuration overview
 - **[Deployment Guide](./docs/DEPLOYMENT.md)** - GitHub Pages deployment instructions
-- **[Environment Setup](./docs/ENV_SETUP.md)** - Environment variables configuration
+- **[Blank Page Fix](./docs/BLANK_PAGE_FIX.md)** - Troubleshooting blank pages
+- **[Troubleshooting](./docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
 ## 🛠️ Tech Stack
 

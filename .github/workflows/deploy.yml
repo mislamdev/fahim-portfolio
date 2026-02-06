@@ -1,47 +1,60 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Deploy Vite + React app to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
+    branches: ['main', 'master']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+# Sets permissions for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Allow only one concurrent deployment
 concurrency:
   group: 'pages'
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # Build job
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Verify build output
+        run: |
+          echo "=== Checking dist folder contents ==="
+          ls -la dist/
+          echo ""
+          echo "=== Checking for required files ==="
+          test -f dist/index.html && echo "✓ index.html exists" || echo "✗ index.html missing"
+          test -f dist/404.html && echo "✓ 404.html exists" || echo "✗ 404.html missing"
+          test -f dist/CNAME && echo "✓ CNAME exists" || echo "✗ CNAME missing"
+          test -d dist/assets && echo "✓ assets folder exists" || echo "✗ assets folder missing"
+          echo ""
+          echo "=== Checking index.html script tags ==="
+          grep -o '<script[^>]*src="[^"]*"' dist/index.html || echo "No script tags found"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -49,9 +62,28 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
           path: './dist'
 
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Deployment Summary
+        run: |
+          echo "🚀 Deployment completed successfully!"
+          echo "📍 URL: ${{ steps.deployment.outputs.page_url }}"
+          echo ""
+          echo "⚠️ Important: If you see a blank page:"
+          echo "1. Wait 2-3 minutes for propagation"
+          echo "2. Clear browser cache (Ctrl+Shift+Delete)"
+          echo "3. Try incognito mode"
+          echo "4. Check GitHub Pages settings uses 'GitHub Actions' as source"
+
