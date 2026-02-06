@@ -44,16 +44,16 @@ export interface ProjectData {
 export const projects: ProjectData[] = [
   // Personal Projects
   {
-    id: 'survivor-io',
-    title: 'UE5 Survivor.io Clone',
+    id: 'spellcaster',
+    title: 'Spellcaster',
     genre: 'Top-Down - Action Survival',
-    role: 'Game Development',
+    role: 'Solo Developer',
     type: 'personal',
-    image: '/projects/survivor-io.jpg',
+    image: '/projects/spellcaster/Spellcaster-ss-1.png',
     overview: {
       description: [
-        'A top-down action survival game built in Unreal Engine 5, inspired by the popular Survivor.io mobile game.',
-        'Features wave-based enemy spawning, power-up systems, and intense gameplay mechanics designed for maximum engagement.',
+        'A fast-paced top-down action survival game built with Unreal Engine 5 using Blueprints.',
+        'Play as a sorcerer\'s apprentice battling waves of hostile slimes with upgradeable spells.',
       ],
       engine: 'Unreal Engine 5',
       timeframe: '4 weeks',
@@ -61,40 +61,44 @@ export const projects: ProjectData[] = [
     },
     roleSkills: {
       description: [
-        'Full game development from concept to playable prototype',
-        'C++ gameplay programming and Blueprint integration',
-        'Enemy AI behavior and spawning systems',
-        'Power-up and progression mechanics',
+        'Full game development using Blueprints visual scripting',
+        'Implemented auto-casting combat system with multiple spell types',
+        'Created enemy AI behavior for different slime types',
+        'Designed progression system with XP drops and level-up upgrades',
       ],
-      badges: ['C++', 'Blueprints', 'AI Systems', 'Game Mechanics'],
+      badges: ['Unreal Engine 5', 'Blueprints', 'Action Survival', 'Game Design'],
     },
     screenshots: [
-      '/projects/survivor-io.jpg',
+      '/projects/spellcaster/Spellcaster-ss-1.png',
+      '/projects/spellcaster/Spellcaster-ss-2.png',
+      '/projects/spellcaster/Spellcaster-ss-3.png',
+      '/projects/spellcaster/Spellcaster-ss-4.png',
+      '/projects/spellcaster/Spellcaster-ss-5.png',
     ],
     sections: [
       {
-        title: 'Game Design',
-        id: 'game-design',
+        title: 'Game Mechanics',
+        id: 'mechanics',
         content: [
-          'The core design focuses on delivering an engaging survival experience with escalating difficulty and satisfying progression loops.',
+          'The core loop involves surviving waves of enemies while collecting experience to upgrade your arsenal.',
         ],
         subsections: [
           {
-            title: 'Core Mechanics',
+            title: 'Spell System',
             bullets: [
-              'Auto-attack system with upgradeable weapons',
-              'Wave-based enemy spawning with increasing difficulty',
-              'Experience orbs and leveling system',
-              'Power-up selection between waves',
+              'Firebolt: Default auto-aimed projectile',
+              'Ice Spear: Circling defensive projectiles that launch outwards',
+              'Magic Orbs: Orbiting damage zone',
+              'Wind Gale: Random area-of-effect blasts',
             ],
           },
           {
-            title: 'Design Pillars',
-            pillars: [
-              { icon: '🎮', title: 'Accessibility', subtitle: 'Easy to play, hard to master' },
-              { icon: '⚔️', title: 'Progression', subtitle: 'Constant power growth' },
-              { icon: '🎯', title: 'Challenge', subtitle: 'Escalating difficulty' },
-              { icon: '🏆', title: 'Reward', subtitle: 'Satisfying feedback' },
+            title: 'Progression',
+            bullets: [
+              'XP Coins: Copper (5), Silver (15), Gold (50)',
+              '5 Upgrade levels for each spell',
+              'Health pickups for sustainability',
+              'Escalating difficulty with stronger enemy types',
             ],
           },
         ],
@@ -103,20 +107,20 @@ export const projects: ProjectData[] = [
         title: 'Technical Implementation',
         id: 'technical',
         content: [
-          'Built using C++ for core systems with Blueprint visual scripting for rapid iteration on gameplay elements.',
+          'Built entirely using Unreal Engine Blueprints to demonstrate visual scripting capabilities.',
         ],
         bullets: [
-          'Object pooling for efficient enemy spawning',
-          'Behavior trees for enemy AI',
-          'Data-driven weapon and upgrade system',
-          'Optimized for smooth performance',
+          'Modular spell system for easy expansion',
+          'Wave management system handling spawn rates and enemy types',
+          'Optimized projectile pooling',
+          'Custom UI for health, XP, and upgrades',
         ],
       },
     ],
     links: {
       github: 'https://github.com/FahimKamal/UE5_Survivor_io',
     },
-    video: '/projects/survivor-io.mp4',
+    video: '/projects/spellcaster/spellcaster.mp4',
   },
   {
     id: 'dungeon-adventure',
