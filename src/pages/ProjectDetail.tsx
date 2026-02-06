@@ -144,7 +144,6 @@ function PanelBar({ title }: { title: string }) {
 
 function ImageGallery({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showLightbox, setShowLightbox] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const nextImage = useCallback(() => {
