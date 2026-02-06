@@ -39,10 +39,99 @@ export interface ProjectData {
     github?: string;
   };
   video?: string;
+  pdf?: string;
 }
 
 export const projects: ProjectData[] = [
   // Personal Projects
+  {
+    id: 'medieval-village',
+    title: 'Medieval Village Prototype',
+    genre: 'Level Design - Open World Blockout',
+    role: 'Level Designer',
+    type: 'personal',
+    image: '/projects/medieval-village/Medieval Village-cover.png',
+    overview: {
+      description: [
+        'A comprehensive greybox prototype of an open-world medieval village, developed as a capstone project for the Epic Games Level Design Certificate.',
+        'Focuses on spatial design, player flow, and environmental storytelling using Unreal Engine 5.5.',
+      ],
+      engine: 'Unreal Engine 5.5',
+      timeframe: '4 weeks',
+      team: 'Solo (Capstone Project)',
+    },
+    roleSkills: {
+      description: [
+        'Translated conceptual Level Design Document (LDD) into a playable 3D space',
+        'Designed distinct zones (Castle, Village, Farm) with clear navigation and sightlines',
+        'Utilized SuperGrid for effective greyboxing and scale validation',
+        'Implemented gameplay affordances for future stealth and exploration mechanics',
+      ],
+      badges: ['Level Design', 'Greyboxing', 'Spatial Design', 'Unreal Engine 5'],
+    },
+    screenshots: [
+      '/projects/medieval-village/Medieval Village-ss.png',
+      '/projects/medieval-village/Medieval Village-ss-2.png',
+      '/projects/medieval-village/Medieval Village-ss-3.png',
+      '/projects/medieval-village/Medieval Village-ss-4.png',
+      '/projects/medieval-village/Medieval Village-ss-5.png',
+      '/projects/medieval-village/Medieval Village-ss-6.png',
+      '/projects/medieval-village/Medieval Village-ss-7.png',
+      '/projects/medieval-village/Medieval Village-ss-8.png',
+      '/projects/medieval-village/Medieval Village-ss-9.png',
+      '/projects/medieval-village/Medieval Village-ss-10.png',
+      '/projects/medieval-village/Medieval Village-certificate.png',
+    ],
+    sections: [
+      {
+        title: 'Design Philosophy',
+        id: 'design',
+        content: [
+          'The project emphasizes readability and flow, ensuring players can intuitively navigate complex urban and rural environments.',
+        ],
+        subsections: [
+          {
+            title: 'Zone Definition',
+            bullets: [
+              'Castle (80x80m): High ground fortification with traversable walls',
+              'Village (150x150m): Residential and commercial hub with distinct landmarks',
+              'Farming Area: Open fields providing contrast to the dense village',
+            ],
+          },
+          {
+            title: 'Narrative Beats',
+            bullets: [
+              'Arrival: Player enters and observes distinct zones',
+              'Discovery: Identifying questgivers and vulnerable spots',
+              'Challenge: Choosing between Hero (Social) or Thief (Stealth) paths',
+              'Exploration: Uncovering hidden paths and secluded areas',
+            ],
+          },
+          {
+            title: 'Key Design Elements',
+            bullets: [
+              'Verticality: Multi-tiered castle and village layout',
+              'Sightlines: Strategic framing of landmarks (e.g., The Keep, Smithy)',
+              'Pacing: Alternating tight alleyways and open courtyards',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Layout & Map',
+        id: 'layout',
+        content: [
+          'A top-down view of the level reveals the interconnected nature of the distinct zones.',
+        ],
+        images: ['/projects/medieval-village/Medieval Village-map.png'],
+      },
+    ],
+    links: {
+      github: 'https://github.com/FahimKamal/UE5_CastleBlockout',
+    },
+    video: '/projects/medieval-village/medieval-village.mp4',
+    pdf: '/projects/medieval-village/Level Design Document Medieval Village Prototype.pdf',
+  },
   {
     id: 'spellcaster',
     title: 'Spellcaster',

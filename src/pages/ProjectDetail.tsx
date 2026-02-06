@@ -9,7 +9,8 @@ import {
   VolumeX, 
   X, 
   ChevronLeft, 
-  Maximize2 
+  Maximize2,
+  FileText
 } from 'lucide-react';
 import { getProjectById, type ProjectData } from '../data/projects';
 import { Navbar } from '../components/Navbar';
@@ -145,6 +146,7 @@ function PanelBar({ title }: { title: string }) {
 function ImageGallery({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const nextImage = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -153,6 +155,17 @@ function ImageGallery({ images }: { images: string[] }) {
   const prevImage = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   }, [images.length]);
+
+  // Auto-advance slideshow
+  useEffect(() => {
+    if (selectedIndex !== null || isHovered) return;
+
+    const interval = setInterval(() => {
+      nextImage();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [selectedIndex, isHovered, nextImage]);
 
   const nextLightboxImage = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -187,7 +200,11 @@ function ImageGallery({ images }: { images: string[] }) {
     <Panel>
       <PanelBar title="Screenshots" />
       
-      <div className="flex flex-col items-center gap-10">
+      <div 
+        className="flex flex-col items-center gap-10"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {/* Main Featured Image (80% width) */}
         <div 
           className="relative w-full md:w-[80%] aspect-video rounded-xl overflow-hidden cursor-zoom-in group shadow-2xl bg-surface-light border border-white/5"
@@ -226,7 +243,7 @@ function ImageGallery({ images }: { images: string[] }) {
         {/* Thumbnail Carousel */}
         <div className="w-full relative group/carousel">
           <div className="overflow-x-auto pb-4 no-scrollbar scroll-smooth">
-            <div className="flex gap-4 px-4 justify-center">
+            <div className="flex gap-4 px-4 min-w-max">
               {images.map((src, i) => (
                 <button
                   key={i}
@@ -459,6 +476,20 @@ export function ProjectDetail() {
                 <strong className="text-text-primary">Team:</strong> {project.overview.team}
               </span>
             </div>
+
+            {project.pdf && (
+              <div className="mt-6">
+                <a
+                  href={project.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-text-primary text-sm rounded hover:border-accent hover:text-accent transition-colors"
+                >
+                  <FileText className="w-4 h-4" />
+                  View Level Design Document
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Role & Skills */}
@@ -550,9 +581,15 @@ export function ProjectDetail() {
             )}
 
             {section.images && section.images.length > 0 && (
-              <div className="grid grid-cols-2 gap-4 mt-6">
+              <div className={`mt-6 ${
+                section.images.length === 1 
+                  ? 'flex justify-center' 
+                  : 'grid grid-cols-2 gap-4'
+              }`}>
                 {section.images.map((img, i) => (
-                  <figure key={i} className="rounded overflow-hidden">
+                  <figure key={i} className={`rounded overflow-hidden ${
+                    section.images && section.images.length === 1 ? 'max-w-4xl w-full' : ''
+                  }`}>
                     <img src={img} alt={`${section.title} image ${i + 1}`} className="w-full h-auto" />
                   </figure>
                 ))}
