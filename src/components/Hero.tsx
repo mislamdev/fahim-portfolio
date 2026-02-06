@@ -22,14 +22,20 @@ export function Hero() {
   return (
     <section id="home" className="relative">
       {/* Hero Background */}
-      <div className="relative min-h-[60vh] flex items-center justify-center">
+      <div className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img
-            src="/hero-bg.jpg"
-            alt=""
+          <video
+            src="/hero-video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background" />
+          {/* Gray Overlay with Opacity */}
+          <div className="absolute inset-0 bg-slate-900/60" />
+          
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
         </div>
 
         {/* Hero Content */}

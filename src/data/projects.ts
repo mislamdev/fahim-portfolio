@@ -38,6 +38,7 @@ export interface ProjectData {
     playStore?: string;
     github?: string;
   };
+  video?: string;
 }
 
 export const projects: ProjectData[] = [
@@ -115,6 +116,7 @@ export const projects: ProjectData[] = [
     links: {
       github: 'https://github.com/FahimKamal/UE5_Survivor_io',
     },
+    video: '/projects/survivor-io.mp4',
   },
   {
     id: 'dungeon-adventure',
@@ -175,6 +177,7 @@ export const projects: ProjectData[] = [
     links: {
       github: 'https://github.com/FahimKamal/UE5_DungeonAdvanture',
     },
+    video: '/projects/dungeon-adventure.mp4',
   },
   {
     id: 'hybrid-rpg',
@@ -235,6 +238,7 @@ export const projects: ProjectData[] = [
     links: {
       github: 'https://github.com/FahimKamal/UE5_HybridRPG',
     },
+    video: '/projects/hybrid-rpg.mp4',
   },
   
   // Professional Projects
@@ -325,6 +329,7 @@ export const projects: ProjectData[] = [
     links: {
       playStore: 'https://play.google.com/store/apps/details?id=com.novalabs.falltastic',
     },
+    video: '/projects/falltastic.mp4',
   },
   {
     id: 'boat-blitz',
@@ -385,6 +390,7 @@ export const projects: ProjectData[] = [
     links: {
       playStore: 'https://play.google.com/store/apps/details?id=com.novalabs.bb',
     },
+    video: '/projects/boat-blitz.mp4',
   },
   {
     id: 'temple-of-masks',
@@ -472,6 +478,7 @@ export const projects: ProjectData[] = [
     links: {
       playStore: 'https://play.google.com/store/apps/details?id=com.novalabs.tom',
     },
+    video: '/projects/temple-of-masks.mp4',
   },
 ];
 

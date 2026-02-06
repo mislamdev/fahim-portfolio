@@ -1,6 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Github, ChevronRight } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  ExternalLink, 
+  Github, 
+  ChevronRight, 
+  Volume2, 
+  VolumeX, 
+  X, 
+  ChevronLeft, 
+  Maximize2 
+} from 'lucide-react';
 import { getProjectById, type ProjectData } from '../data/projects';
 import { Navbar } from '../components/Navbar';
 
@@ -132,6 +142,245 @@ function PanelBar({ title }: { title: string }) {
   );
 }
 
+function ImageGallery({ images }: { images: string[] }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showLightbox, setShowLightbox] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const nextImage = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const prevImage = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const nextLightboxImage = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex + 1) % images.length);
+    }
+  }, [selectedIndex, images.length]);
+
+  const prevLightboxImage = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
+    }
+  }, [selectedIndex, images.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex !== null) {
+        if (e.key === 'ArrowRight') nextLightboxImage();
+        if (e.key === 'ArrowLeft') prevLightboxImage();
+        if (e.key === 'Escape') setSelectedIndex(null);
+      } else {
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex, nextLightboxImage, prevLightboxImage, nextImage, prevImage]);
+
+  return (
+    <Panel>
+      <PanelBar title="Screenshots" />
+      
+      <div className="flex flex-col items-center gap-10">
+        {/* Main Featured Image (80% width) */}
+        <div 
+          className="relative w-full md:w-[80%] aspect-video rounded-xl overflow-hidden cursor-zoom-in group shadow-2xl bg-surface-light border border-white/5"
+          onClick={() => setSelectedIndex(currentIndex)}
+        >
+          <img 
+            src={images[currentIndex]} 
+            alt={`Project visual ${currentIndex + 1}`} 
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+          />
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <div className="p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+              <Maximize2 className="w-8 h-8 text-white" />
+            </div>
+          </div>
+
+          {/* Quick Nav Overlay for Main Image */}
+          {images.length > 1 && (
+            <>
+              <button 
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white opacity-0 group-hover:opacity-100 transition-all"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white opacity-0 group-hover:opacity-100 transition-all"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Thumbnail Carousel */}
+        <div className="w-full relative group/carousel">
+          <div className="overflow-x-auto pb-4 no-scrollbar scroll-smooth">
+            <div className="flex gap-4 px-4 justify-center">
+              {images.map((src, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className={`relative flex-shrink-0 w-32 md:w-44 aspect-video rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    currentIndex === i 
+                      ? 'border-accent ring-4 ring-accent/20 scale-105 shadow-lg shadow-accent/10' 
+                      : 'border-white/5 opacity-40 hover:opacity-100 hover:border-white/20'
+                  }`}
+                >
+                  <img src={src} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fullscreen Lightbox */}
+      {selectedIndex !== null && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10"
+          onClick={() => setSelectedIndex(null)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-full z-[110]"
+            onClick={() => setSelectedIndex(null)}
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          {images.length > 1 && (
+            <>
+              <button 
+                className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
+                onClick={prevLightboxImage}
+              >
+                <ChevronLeft className="w-12 h-12" />
+              </button>
+              <button 
+                className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 hover:bg-white/10 rounded-full z-[110]"
+                onClick={nextLightboxImage}
+              >
+                <ChevronRight className="w-12 h-12" />
+              </button>
+            </>
+          )}
+
+          <div className="relative max-w-7xl max-h-full flex flex-col items-center gap-6" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={images[selectedIndex]} 
+              alt="Project screenshot full view" 
+              className="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-lg animate-in zoom-in-95 duration-300"
+            />
+            
+            <div className="flex flex-col items-center gap-4">
+              <div className="text-white/60 text-sm font-medium tracking-[0.3em] uppercase">
+                {selectedIndex + 1} / {images.length}
+              </div>
+
+              {images.length > 1 && (
+                <div className="hidden md:flex gap-3 px-4 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+                  {images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedIndex(idx)}
+                      className={`w-16 h-10 rounded-md border-2 transition-all overflow-hidden ${
+                        selectedIndex === idx ? 'border-accent scale-110 shadow-lg' : 'border-transparent opacity-30 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+function ProjectMedia({ project }: { project: ProjectData }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent play/pause toggle when clicking mute
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  return (
+    <div className="bg-background">
+      <div className="max-w-5xl mx-auto px-6 -mt-8 pb-8">
+        <div className="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg" onClick={togglePlay}>
+          {project.video ? (
+            <>
+              <video
+                ref={videoRef}
+                src={project.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto"
+              />
+              {/* Mute/Unmute Overlay */}
+              <button
+                onClick={toggleMute}
+                className="absolute bottom-4 right-4 p-2 bg-background/40 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-background/60 transition-all z-10"
+                title={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+              
+              {/* Subtle Pause Indicator (only shows briefly or on hover if you prefer, but requirement said no button) */}
+              {!isPlaying && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px]">
+                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-accent/20 border border-accent/40">
+                    <div className="w-4 h-6 border-l-4 border-r-4 border-white" />
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <img
+              src={project.image}
+              alt={`${project.title} main screenshot`}
+              className="w-full h-auto"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const project = getProjectById(projectId || '');
@@ -159,28 +408,17 @@ export function ProjectDetail() {
 
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0">
           <img
             src={project.image}
             alt=""
             className="w-full h-full object-cover"
           />
-          {/* Procedural Pattern Overlays */}
-          <div 
-            className="absolute inset-0 opacity-20 mix-blend-overlay bg-center" 
-            style={{ backgroundImage: `url(${project.image})`, backgroundSize: '300px' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background" />
-          <div className="absolute inset-0 bg-background/10 backdrop-blur-[1px]" />
+          {/* Transparent Gray Overlay */}
+          <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[1px]" />
           
-          {/* Subtle Grid Generator Effect */}
-          <div 
-            className="absolute inset-0 opacity-[0.15]" 
-            style={{
-              backgroundImage: `linear-gradient(var(--color-accent) 1px, transparent 1px), linear-gradient(90deg, var(--color-accent) 1px, transparent 1px)`,
-              backgroundSize: '40px 40px'
-            }}
-          />
+          {/* Fade to background color at the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
         </div>
 
         <div className="relative max-w-6xl mx-auto px-6 py-20 flex flex-col items-center text-center">
@@ -197,18 +435,8 @@ export function ProjectDetail() {
         </div>
       </section>
 
-      {/* Hero Screenshot */}
-      <div className="bg-background">
-        <div className="max-w-5xl mx-auto px-6 -mt-8 pb-8">
-          <figure>
-            <img
-              src={project.image}
-              alt={`${project.title} main screenshot`}
-              className="w-full rounded-lg shadow-lg"
-            />
-          </figure>
-        </div>
-      </div>
+      {/* Hero Screenshot / Video */}
+      <ProjectMedia project={project} />
 
       {/* Overview & Role Section */}
       <SectionWrapper variant="alt" className="scroll-mt-24" id="overview">
@@ -261,16 +489,7 @@ export function ProjectDetail() {
 
       {/* Screenshots Gallery */}
       <SectionWrapper variant="default" id="screenshots" className="scroll-mt-24">
-        <Panel>
-          <PanelBar title="Screenshots" />
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {project.screenshots.map((src, i) => (
-              <figure key={i} className="rounded overflow-hidden">
-                <img src={src} alt={`Screenshot ${i + 1}`} className="w-full h-auto" />
-              </figure>
-            ))}
-          </div>
-        </Panel>
+        <ImageGallery images={project.screenshots} />
       </SectionWrapper>
 
       {/* Dynamic Sections with alternating backgrounds */}
