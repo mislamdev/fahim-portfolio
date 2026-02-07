@@ -374,6 +374,7 @@ function ProjectMedia({ project }: { project: ProjectData }) {
               <video
                 ref={videoRef}
                 src={project.video}
+                poster={project.image}
                 autoPlay
                 loop
                 muted

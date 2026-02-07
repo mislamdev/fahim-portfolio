@@ -523,7 +523,7 @@ export const projects: ProjectData[] = [
     genre: 'Casual - 3D Puzzle',
     role: 'Lead Developer',
     type: 'professional',
-    image: '/projects/falltastic.jpg',
+    image: '/projects/falltastic.webp',
     overview: {
       description: [
         'FallTastic is a casual 3D puzzle game where players guide falling objects to create satisfying chain reactions.',
@@ -544,7 +544,7 @@ export const projects: ProjectData[] = [
       badges: ['Lead Developer', 'Game Design', 'Unity', 'Team Management'],
     },
     screenshots: [
-      '/projects/falltastic.jpg',
+      '/projects/falltastic.webp',
     ],
     sections: [
       {
@@ -612,7 +612,7 @@ export const projects: ProjectData[] = [
     genre: 'Casual - Infinite Runner',
     role: 'Game Engine Engineer',
     type: 'professional',
-    image: '/projects/boat-blitz.jpg',
+    image: '/projects/boatBlitz.png',
     overview: {
       description: [
         'Boat Blitz is an endless runner game featuring speedboat racing across infinite oceans with dynamic environments.',
@@ -632,7 +632,7 @@ export const projects: ProjectData[] = [
       badges: ['Unity', 'C#', 'Procedural Generation', 'UI/UX'],
     },
     screenshots: [
-      '/projects/boat-blitz.jpg',
+      '/projects/boatBlitz.png',
     ],
     sections: [
       {
@@ -673,7 +673,7 @@ export const projects: ProjectData[] = [
     genre: 'Puzzle - Level Based',
     role: 'Level Designer (70 levels)',
     type: 'professional',
-    image: '/projects/temple-of-masks.jpg',
+    image: '/projects/temple of masks.png',
     overview: {
       description: [
         'Temple of Masks is a puzzle game set in ancient Mayan temples where players solve increasingly complex challenges.',
@@ -693,7 +693,7 @@ export const projects: ProjectData[] = [
       badges: ['Level Design', 'Puzzle Design', 'Documentation', 'Cultural Research'],
     },
     screenshots: [
-      '/projects/temple-of-masks.jpg',
+      '/projects/temple of masks.png',
     ],
     sections: [
       {
