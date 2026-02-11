@@ -1,0 +1,217 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                     🚨 CRITICAL ACTION REQUIRED NOW 🚨                       ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+YOUR SITE IS BLANK BECAUSE: GitHub Pages is serving the WRONG folder
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  WHAT'S HAPPENING NOW:                                                       │
+│                                                                              │
+│  Browser visits: https://fahimkamal.miit.uk                                 │
+│           ↓                                                                  │
+│  GitHub Pages serves: Repository Root/index.html                            │
+│           ↓                                                                  │
+│  HTML contains: <script src="/src/main.tsx">                                │
+│           ↓                                                                  │
+│  Browser loads: https://fahimkamal.miit.uk/src/main.tsx                     │
+│           ↓                                                                  │
+│  Browser says: "I can't execute TypeScript!"                                │
+│           ↓                                                                  │
+│  Result: BLANK PAGE ❌                                                       │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  WHAT SHOULD HAPPEN:                                                         │
+│                                                                              │
+│  Browser visits: https://fahimkamal.miit.uk                                 │
+│           ↓                                                                  │
+│  GitHub Pages serves: dist/index.html (from GitHub Actions)                 │
+│           ↓                                                                  │
+│  HTML contains: <script src="/assets/index-[hash].js">                      │
+│           ↓                                                                  │
+│  Browser loads: https://fahimkamal.miit.uk/assets/index--8GceQfd.js         │
+│           ↓                                                                  │
+│  Browser executes: Compiled JavaScript                                      │
+│           ↓                                                                  │
+│  Result: SITE WORKS! ✅                                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                   👉 DO THIS RIGHT NOW (2 MINUTES) 👈                       ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+STEP 1: Open your GitHub repository in a web browser
+
+STEP 2: Click on "Settings" (top menu bar)
+
+STEP 3: Click on "Pages" (left sidebar menu)
+
+STEP 4: Find the section titled "Build and deployment"
+
+STEP 5: Look for the "Source" dropdown menu
+
+        Current value: "Deploy from a branch"  ❌ THIS IS WRONG!
+
+        Click the dropdown and select: "GitHub Actions"  ✅ THIS IS CORRECT!
+
+STEP 6: Below that, set:
+        - Custom domain: fahimkamal.miit.uk
+        - Check the box: ✅ Enforce HTTPS
+
+STEP 7: Click the "Save" button
+
+STEP 8: Go to the "Actions" tab (top menu bar)
+
+STEP 9: Click "Deploy to GitHub Pages" (left sidebar)
+
+STEP 10: Click the "Run workflow" button (top right, green button)
+
+STEP 11: Select "main" branch from dropdown
+
+STEP 12: Click "Run workflow" button
+
+STEP 13: Wait 2-3 minutes for deployment (you'll see a green ✅ when done)
+
+STEP 14: Clear your browser cache:
+         - Press Ctrl + Shift + Delete (Windows/Linux)
+         - Press Cmd + Shift + Delete (Mac)
+         - Select "All time"
+         - Check "Cached images and files"
+         - Click "Clear data"
+
+STEP 15: Visit https://fahimkamal.miit.uk
+
+RESULT: Your site now works! 🎉
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                         WHY THIS IS THE ONLY FIX                             ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+✅ Your code is PERFECT
+✅ Your build is PERFECT (dist/ folder has all correct files)
+✅ Your GitHub Actions workflow is PERFECT
+✅ Your workflow correctly uploads the dist/ folder
+
+❌ GitHub Pages doesn't know to use the uploaded dist/ folder
+❌ It's using "Deploy from a branch" which serves repository files
+❌ Repository files include index.html with /src/main.tsx reference
+
+The ONLY thing wrong is the GitHub Pages setting!
+
+When you change "Source" to "GitHub Actions", you're telling GitHub Pages:
+
+  "Don't serve files from the repository branch.
+   Serve the artifact that GitHub Actions uploaded (the dist/ folder)."
+
+That's it! One dropdown change. Everything else is already correct.
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                         IF STILL NOT WORKING                                 ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+If you did all the steps above and site is still blank:
+
+1. Go back to Settings → Pages
+   → Verify "Source" shows "GitHub Actions" (not a branch name!)
+
+2. Go to Actions tab
+   → Verify latest workflow has green ✅ (not red ❌)
+   → If red ❌, click it to see the error
+
+3. Clear browser cache AGAIN
+   → Or use Incognito mode: Ctrl + Shift + N
+
+4. Wait 5 more minutes
+   → Sometimes GitHub Pages cache takes time to clear
+
+5. Try different browser or device
+   → Chrome, Firefox, Safari, or mobile phone
+
+6. Check browser console (F12 → Console tab)
+   → Should NOT see "Failed to load module script"
+   → Should NOT see errors about /src/main.tsx
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                            HELPFUL COMMANDS                                  ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Run this for full diagnostic:
+  $ ./diagnose-deployment.sh
+
+Run this for interactive guide:
+  $ ./interactive-fix.sh
+
+Run this for verification:
+  $ ./fix-deployment.sh
+
+Read these for detailed help:
+  - FIX_BLANK_PAGE.md (this issue specifically)
+  - SOLUTION.md (complete guide)
+  - VISUAL_GUIDE.txt (visual diagrams)
+  - QUICK_FIX_GUIDE.md (troubleshooting)
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                         VERIFICATION CHECKLIST                               ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Before declaring success, verify:
+
+In GitHub Settings → Pages:
+  [ ] Source = "GitHub Actions" (NOT "Deploy from a branch")
+  [ ] Custom domain = "fahimkamal.miit.uk"
+  [ ] Enforce HTTPS is checked
+
+In GitHub Actions tab:
+  [ ] Latest workflow run shows green ✅
+  [ ] Workflow completed successfully
+  [ ] No red ❌ or failed steps
+
+In Browser:
+  [ ] Cleared cache completely
+  [ ] Tried hard refresh (Ctrl + Shift + R)
+  [ ] Tried incognito mode (Ctrl + Shift + N)
+
+On Website:
+  [ ] Page loads with content (NOT blank)
+  [ ] URL is https://fahimkamal.miit.uk/ (NOT /src/main.tsx)
+  [ ] Navigation menu appears
+  [ ] Projects are visible
+  [ ] No console errors (press F12 to check)
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                              FINAL NOTE                                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+This is a ONE-TIME configuration change!
+
+After you fix this, all future deployments will work automatically.
+Just push your code to GitHub and it will deploy in 2-3 minutes.
+
+No more blank pages! 🚀
+
+════════════════════════════════════════════════════════════════════════════════
+
+Last Updated: February 11, 2026, 10:05 PM
+Status: Waiting for GitHub Pages Source configuration change
+Fix Time: 2 minutes (+ 3 minutes deployment)
+
+════════════════════════════════════════════════════════════════════════════════
+
