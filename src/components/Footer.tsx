@@ -50,7 +50,7 @@ export function Footer() {
                 <span>LinkedIn</span>
               </a>
               <a
-                href="https://github.com/Fahim-Ahmad"
+                href="https://github.com/FahimKamal"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-text-primary hover:text-accent transition-colors"
