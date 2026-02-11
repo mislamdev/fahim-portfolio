@@ -4,6 +4,35 @@ Game Developer portfolio website built with React, TypeScript, and Vite. Featuri
 
 🌐 **Live Site**: [https://fahimkamal.miit.uk](https://fahimkamal.miit.uk)
 
+---
+
+## 🚨 BLANK PAGE FIX - READ THIS FIRST!
+
+**If you see a blank page at https://fahimkamal.miit.uk:**
+
+### The Problem
+Your site shows a blank page because GitHub Pages is serving the **raw source files** instead of the **built files**.
+
+### The Solution (Takes 2 minutes)
+
+**Step 1**: Run the automated fix script
+```bash
+./fix-deployment.sh
+```
+
+**Step 2**: Configure GitHub Pages Settings ⚠️ **THIS IS CRITICAL!**
+1. Go to: **Repository Settings → Pages**
+2. Under "Build and deployment":
+   - **Source**: Change to **"GitHub Actions"** (NOT "Deploy from a branch"!)
+3. Custom domain: `fahimkamal.miit.uk`
+4. Click **Save**
+
+**Step 3**: Wait 2-3 minutes, then clear browser cache and reload
+
+**📖 Detailed Guide**: See [CRITICAL_FIX.md](./CRITICAL_FIX.md) for complete instructions
+
+---
+
 ## 🚀 Quick Start
 
 ```bash
@@ -20,23 +49,6 @@ npm run build
 npm run preview
 ```
 
-## 🔧 Deployment Quick Fix
-
-If you see a blank page after deployment:
-
-```bash
-# Run the verification script
-./check-deployment.sh
-
-# Then commit and push
-git add .
-git commit -m "Deploy with fixed configuration"
-git push
-```
-
-**CRITICAL**: Ensure GitHub Pages settings use **"GitHub Actions"** as the source (NOT "Deploy from a branch")
-
-📖 **Full Fix Guide**: [docs/PERMANENT_FIX.md](./docs/PERMANENT_FIX.md)
 
 ## 📚 Documentation
 
